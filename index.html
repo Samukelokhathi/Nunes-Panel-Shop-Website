@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nunes Panel Shop - Premium Automotive Restoration</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/3010d94d2f.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "nunes-red": "#e60000",
+              "nunes-dark": "#0a0a0a",
+              "nunes-gray": "#1a1a1a",
+              "nunes-light": "#f5f5f7",
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              montserrat: ["Montserrat", "sans-serif"],
+            },
+            animation: {
+              "fade-in": "fadeIn 1s ease-in-out forwards",
+              "fade-in-up": "fadeInUp 1s ease-in-out forwards",
+              "fade-in-left": "fadeInLeft 1s ease-in-out forwards",
+              "fade-in-right": "fadeInRight 1s ease-in-out forwards",
+              "scale-in": "scaleIn 1s ease-in-out forwards",
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(30px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              fadeInLeft: {
+                "0%": { opacity: "0", transform: "translateX(-30px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+              fadeInRight: {
+                "0%": { opacity: "0", transform: "translateX(30px)" },
+                "100%": { opacity: "1", transform: "translateX(0)" },
+              },
+              scaleIn: {
+                "0%": { opacity: "0", transform: "scale(0.9)" },
+                "100%": { opacity: "1", transform: "scale(1)" },
+              },
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: #000;
+        color: #f5f5f7;
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+      }
+
+      .video-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .video-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translateX(-50%) translateY(-50%);
+        z-index: -1;
+        object-fit: cover;
+      }
+
+      .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.5) 50%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+        z-index: 0;
+      }
+
+      .section-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0.6;
+      }
+
+      .text-gradient {
+        background: linear-gradient(90deg, #ffffff, #e60000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .text-shadow {
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      }
+
+      .glass-card {
+        background: rgba(26, 26, 26, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .glass-nav {
+        background: rgba(10, 10, 10, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .service-card {
+        transition: all 0.5s ease;
+        transform: translateY(0);
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .service-icon {
+        transition: all 0.5s ease;
+      }
+
+      .service-card:hover .service-icon {
+        transform: scale(1.1);
+      }
+
+      .gallery-item {
+        overflow: hidden;
+        position: relative;
+      }
+
+      .gallery-item img {
+        transition: transform 0.8s ease;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.05);
+      }
+
+      .gallery-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.8) 0%,
+          rgba(0, 0, 0, 0) 60%
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
+
+      .scroll-indicator {
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .animate-delay-100 {
+        animation-delay: 0.1s;
+      }
+
+      .animate-delay-200 {
+        animation-delay: 0.2s;
+      }
+
+      .animate-delay-300 {
+        animation-delay: 0.3s;
+      }
+
+      .animate-delay-400 {
+        animation-delay: 0.4s;
+      }
+
+      .animate-delay-500 {
+        animation-delay: 0.5s;
+      }
+
+      .animate-delay-600 {
+        animation-delay: 0.6s;
+      }
+
+      .animate-delay-700 {
+        animation-delay: 0.7s;
+      }
+
+      .animate-delay-800 {
+        animation-delay: 0.8s;
+      }
+
+      .animate-delay-900 {
+        animation-delay: 0.9s;
+      }
+
+      .animate-delay-1000 {
+        animation-delay: 1s;
+      }
+
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #e60000, #ff3333);
+        z-index: 100;
+        transition: width 0.1s ease;
+      }
+
+      .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #e60000;
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s ease;
+      }
+
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 2px solid rgba(230, 0, 0, 0.5);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      .cursor-hover {
+        width: 60px;
+        height: 60px;
+        border-color: rgba(230, 0, 0, 0.8);
+      }
+
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .before-after-slider {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 400px;
+      }
+
+      .before-image,
+      .after-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .before-image {
+        z-index: 1;
+        clip-path: polygon(
+          0 0,
+          var(--position) 0,
+          var(--position) 100%,
+          0 100%
+        );
+      }
+
+      .slider-handle {
+        position: absolute;
+        top: 0;
+        left: var(--position);
+        width: 4px;
+        height: 100%;
+        background-color: #e60000;
+        z-index: 3;
+        cursor: ew-resize;
+      }
+
+      .slider-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e60000;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .slider-label {
+        position: absolute;
+        bottom: 20px;
+        padding: 5px 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        border-radius: 4px;
+        font-size: 12px;
+        z-index: 3;
+      }
+
+      .before-label {
+        left: 20px;
+      }
+
+      .after-label {
+        right: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // Custom hooks
+      const useScrollPosition = () => {
+        const [scrollPosition, setScrollPosition] = React.useState(0);
+
+        React.useEffect(() => {
+          const updatePosition = () => {
+            const scrollPx = document.documentElement.scrollTop;
+            const winHeightPx =
+              document.documentElement.scrollHeight -
+              document.documentElement.clientHeight;
+            const scrolled = (scrollPx / winHeightPx) * 100;
+            setScrollPosition(scrolled);
+          };
+
+          window.addEventListener("scroll", updatePosition);
+          updatePosition();
+
+          return () => window.removeEventListener("scroll", updatePosition);
+        }, []);
+
+        return scrollPosition;
+      };
+
+      const useIntersectionObserver = (elementRef, options) => {
+        const [isVisible, setIsVisible] = React.useState(false);
+
+        React.useEffect(() => {
+          if (!elementRef.current) return;
+
+          const observer = new IntersectionObserver(([entry]) => {
+            setIsVisible(entry.isIntersecting);
+          }, options);
+
+          observer.observe(elementRef.current);
+
+          return () => {
+            if (elementRef.current) {
+              observer.unobserve(elementRef.current);
+            }
+          };
+        }, [elementRef, options]);
+
+        return isVisible;
+      };
+
+      // Components
+      const ProgressBar = () => {
+        const scrollPosition = useScrollPosition();
+
+        return (
+          <div
+            className="progress-bar"
+            style={{ width: `${scrollPosition}%` }}
+          ></div>
+        );
+      };
+
+      const CustomCursor = () => {
+        const [position, setPosition] = React.useState({ x: 0, y: 0 });
+        const [isHovering, setIsHovering] = React.useState(false);
+        const [isVisible, setIsVisible] = React.useState(false);
+
+        React.useEffect(() => {
+          const updatePosition = (e) => {
+            setPosition({ x: e.clientX, y: e.clientY });
+            setIsVisible(true);
+          };
+
+          const updateHoverState = (e) => {
+            const target = e.target;
+            const isLink =
+              target.tagName.toLowerCase() === "a" ||
+              target.tagName.toLowerCase() === "button" ||
+              target.closest("a") ||
+              target.closest("button");
+            setIsHovering(isLink);
+          };
+
+          const handleMouseLeave = () => {
+            setIsVisible(false);
+          };
+
+          window.addEventListener("mousemove", updatePosition);
+          window.addEventListener("mouseover", updateHoverState);
+          document.addEventListener("mouseleave", handleMouseLeave);
+
+          return () => {
+            window.removeEventListener("mousemove", updatePosition);
+            window.removeEventListener("mouseover", updateHoverState);
+            document.removeEventListener("mouseleave", handleMouseLeave);
+          };
+        }, []);
+
+        if (!isVisible) return null;
+
+        return (
+          <>
+            <div
+              className="cursor-dot"
+              style={{
+                left: `${position.x}px`,
+                top: `${position.y}px`,
+              }}
+            ></div>
+            <div
+              className={`cursor-outline ${isHovering ? "cursor-hover" : ""}`}
+              style={{
+                left: `${position.x}px`,
+                top: `${position.y}px`,
+              }}
+            ></div>
+          </>
+        );
+      };
+
+      const VideoBackground = ({ src, children, overlay = true }) => {
+        return (
+          <div className="video-container">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source
+                src="videos/paiting bumper.mp4"
+                type="video/mp4"
+                autoPlay
+                muted
+                loop
+              />
+              Your browser does not support the video tag.
+            </video>
+            {overlay && <div className="video-overlay"></div>}
+            <div className="relative z-10 h-full">{children}</div>
+          </div>
+        );
+      };
+
+      const AnimatedText = ({ text, className, delay = 0 }) => {
+        const words = text.split(" ");
+
+        return (
+          <div className={className}>
+            {words.map((word, index) => (
+              <span
+                key={index}
+                className={`inline-block animate-fade-in-up`}
+                style={{ animationDelay: `${delay + index * 0.1}s` }}
+              >
+                {word}{" "}
+              </span>
+            ))}
+          </div>
+        );
+      };
+
+      const FadeInSection = ({
+        children,
+        direction = "up",
+        delay = 0,
+        className = "",
+      }) => {
+        const domRef = React.useRef();
+        const isVisible = useIntersectionObserver(domRef, { threshold: 0.1 });
+
+        let animationClass = "";
+        switch (direction) {
+          case "up":
+            animationClass = "animate-fade-in-up";
+            break;
+          case "left":
+            animationClass = "animate-fade-in-left";
+            break;
+          case "right":
+            animationClass = "animate-fade-in-right";
+            break;
+          case "scale":
+            animationClass = "animate-scale-in";
+            break;
+          default:
+            animationClass = "animate-fade-in";
+        }
+
+        return (
+          <div
+            ref={domRef}
+            className={`${className} ${
+              isVisible ? animationClass : "opacity-0"
+            }`}
+            style={{ animationDelay: `${delay}s` }}
+          >
+            {children}
+          </div>
+        );
+      };
+
+      const BeforeAfterSlider = ({
+        beforeImage,
+        afterImage,
+        beforeLabel = "Before",
+        afterLabel = "After",
+      }) => {
+        const [position, setPosition] = React.useState(50);
+        const sliderRef = React.useRef(null);
+
+        const handleMouseDown = (e) => {
+          e.preventDefault();
+          document.addEventListener("mousemove", handleMouseMove);
+          document.addEventListener("mouseup", handleMouseUp);
+        };
+
+        const handleMouseMove = (e) => {
+          if (!sliderRef.current) return;
+
+          const rect = sliderRef.current.getBoundingClientRect();
+          const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+          const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+
+          setPosition(percent);
+        };
+
+        const handleMouseUp = () => {
+          document.removeEventListener("mousemove", handleMouseMove);
+          document.removeEventListener("mouseup", handleMouseUp);
+        };
+
+        const handleTouchStart = (e) => {
+          const touch = e.touches[0];
+          document.addEventListener("touchmove", handleTouchMove);
+          document.addEventListener("touchend", handleTouchEnd);
+        };
+
+        const handleTouchMove = (e) => {
+          if (!sliderRef.current) return;
+
+          const touch = e.touches[0];
+          const rect = sliderRef.current.getBoundingClientRect();
+          const x = Math.max(
+            0,
+            Math.min(touch.clientX - rect.left, rect.width)
+          );
+          const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+
+          setPosition(percent);
+        };
+
+        const handleTouchEnd = () => {
+          document.removeEventListener("touchmove", handleTouchMove);
+          document.removeEventListener("touchend", handleTouchEnd);
+        };
+
+        return (
+          <div
+            ref={sliderRef}
+            className="before-after-slider rounded-xl overflow-hidden"
+            style={{ "--position": `${position}%` }}
+          >
+            <div
+              className="after-image"
+              style={{ backgroundImage: `url(${afterImage})` }}
+            ></div>
+            <div
+              className="before-image"
+              style={{ backgroundImage: `url(${beforeImage})` }}
+            ></div>
+
+            <div
+              className="slider-handle"
+              onMouseDown={handleMouseDown}
+              onTouchStart={handleTouchStart}
+            >
+              <div className="slider-button">
+                <i className="fas fa-arrows-alt-h text-sm"></i>
+              </div>
+            </div>
+
+            <div className="slider-label before-label">{beforeLabel}</div>
+            <div className="slider-label after-label">{afterLabel}</div>
+          </div>
+        );
+      };
+
+      const App = () => {
+        const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+        const [activeSection, setActiveSection] = React.useState("home");
+
+        React.useEffect(() => {
+          const handleScroll = () => {
+            const sections = [
+              "home",
+              "services",
+              "about",
+              "gallery",
+              "testimonials",
+              "contact",
+            ];
+
+            for (const section of sections) {
+              const element = document.getElementById(section);
+              if (!element) continue;
+
+              const rect = element.getBoundingClientRect();
+              const offset = 200;
+
+              if (rect.top <= offset && rect.bottom >= offset) {
+                setActiveSection(section);
+                break;
+              }
+            }
+          };
+
+          window.addEventListener("scroll", handleScroll);
+          return () => window.removeEventListener("scroll", handleScroll);
+        }, []);
+
+        const toggleMenu = () => {
+          setIsMenuOpen(!isMenuOpen);
+        };
+
+        const closeMenu = () => {
+          setIsMenuOpen(false);
+        };
+
+        const scrollToSection = (sectionId) => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            const offset = 80;
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = element.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+
+            closeMenu();
+          }
+        };
+
+        return (
+          <>
+            <ProgressBar />
+            <CustomCursor />
+
+            {/* Navigation */}
+            <nav className="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+              <div className="container mx-auto px-6 py-4">
+                <div className="flex justify-between items-center">
+                  <a
+                    href="#home"
+                    className="flex items-center"
+                    onClick={() => scrollToSection("home")}
+                  >
+                    <div className="text-2xl font-bold font-montserrat tracking-tight">
+                      <span className="text-white">NUNES</span>
+                      <span className="text-nunes-red">PANEL</span>
+                      <span className="text-white">SHOP</span>
+                    </div>
+                  </a>
+
+                  <div className="hidden lg:flex space-x-8">
+                    <a
+                      href="#home"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "home"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("home");
+                      }}
+                    >
+                      Home
+                    </a>
+                    <a
+                      href="#services"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "services"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("services");
+                      }}
+                    >
+                      Services
+                    </a>
+                    <a
+                      href="#about"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "about"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("about");
+                      }}
+                    >
+                      About
+                    </a>
+                    <a
+                      href="#gallery"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "gallery"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("gallery");
+                      }}
+                    >
+                      Gallery
+                    </a>
+                    <a
+                      href="#testimonials"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "testimonials"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("testimonials");
+                      }}
+                    >
+                      Testimonials
+                    </a>
+                    <a
+                      href="#contact"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "contact"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("contact");
+                      }}
+                    >
+                      Contact
+                    </a>
+                  </div>
+
+                  <div className="hidden lg:block">
+                    <a
+                      href="#quote"
+                      className="bg-nunes-red hover:bg-red-700 text-white px-6 py-2 rounded-md font-medium transition-all duration-300 hover:shadow-lg"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("quote");
+                      }}
+                    >
+                      Get a Quote
+                    </a>
+                  </div>
+
+                  <div className="lg:hidden">
+                    <button
+                      onClick={toggleMenu}
+                      className="text-white focus:outline-none"
+                    >
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M4 6h16M4 12h16M4 18h16"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Mobile Menu */}
+                <div
+                  className={`lg:hidden ${
+                    isMenuOpen ? "block" : "hidden"
+                  } pt-4 pb-2`}
+                >
+                  <div className="flex flex-col space-y-4">
+                    <a
+                      href="#home"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "home"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("home");
+                      }}
+                    >
+                      Home
+                    </a>
+                    <a
+                      href="#services"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "services"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("services");
+                      }}
+                    >
+                      Services
+                    </a>
+                    <a
+                      href="#about"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "about"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("about");
+                      }}
+                    >
+                      About
+                    </a>
+                    <a
+                      href="#gallery"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "gallery"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("gallery");
+                      }}
+                    >
+                      Gallery
+                    </a>
+                    <a
+                      href="#testimonials"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "testimonials"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("testimonials");
+                      }}
+                    >
+                      Testimonials
+                    </a>
+                    <a
+                      href="#contact"
+                      className={`font-medium transition-colors duration-300 ${
+                        activeSection === "contact"
+                          ? "text-nunes-red"
+                          : "text-white hover:text-nunes-red"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("contact");
+                      }}
+                    >
+                      Contact
+                    </a>
+                    <a
+                      href="#quote"
+                      className="bg-nunes-red hover:bg-red-700 text-white px-6 py-2 rounded-md font-medium transition-all duration-300 hover:shadow-lg inline-block text-center"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("quote");
+                      }}
+                    >
+                      Get a Quote
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </nav>
+
+            {/* Hero Section */}
+            <section
+              id="home"
+              className="relative min-h-screen flex items-center"
+            >
+              <VideoBackground src="videos/7493835-uhd_4096_2160_25fps.mp4">
+                <div className="container mx-auto px-6 relative z-10 pt-24">
+                  <div className="max-w-3xl">
+                    <div className="inline-block bg-nunes-red px-4 py-1 mb-6 animate-fade-in-up">
+                      <span className="text-white font-medium">
+                        15+ Years of Excellence
+                      </span>
+                    </div>
+
+                    <h1 className="font-montserrat text-5xl md:text-7xl text-white mb-6 leading-tight font-bold text-shadow">
+                      <AnimatedText
+                        text="AUTOMOTIVE PERFECTION"
+                        className="block mb-2"
+                        delay={0.2}
+                      />
+                      <AnimatedText
+                        text="REDEFINED"
+                        className="text-gradient block"
+                        delay={0.6}
+                      />
+                    </h1>
+
+                    <p className="text-gray-300 text-lg mb-8 max-w-2xl animate-fade-in-up animate-delay-800">
+                      With precision craftsmanship and cutting-edge technology,
+                      Nunes Panel Shop transforms damaged vehicles into
+                      masterpieces of automotive restoration.
+                    </p>
+
+                    <div className="glass-card inline-block px-4 py-2 rounded-md mb-8 animate-fade-in-up animate-delay-900">
+                      <p className="flex items-center text-white">
+                        <i className="fas fa-shield-alt mr-2 text-nunes-red"></i>
+                        <span className="font-semibold">
+                          12-Month Workmanship & Paint Warranty
+                        </span>
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-4 animate-fade-in-up animate-delay-1000">
+                      <a
+                        href="#contact"
+                        className="bg-nunes-red hover:bg-red-700 text-white px-8 py-4 rounded-md font-semibold flex items-center transition-all duration-300 hover:shadow-lg"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection("contact");
+                        }}
+                      >
+                        <i className="fas fa-phone-alt mr-2"></i> Contact Us
+                      </a>
+                      <a
+                        href="#gallery"
+                        className="bg-white hover:bg-gray-100 text-black px-8 py-4 rounded-md font-semibold flex items-center transition-all duration-300 hover:shadow-lg"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection("gallery");
+                        }}
+                      >
+                        <i className="fas fa-images mr-2"></i> View Our Work
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white scroll-indicator">
+                  <div className="flex flex-col items-center">
+                    <span className="text-sm mb-2">Scroll Down</span>
+                    <i className="fas fa-chevron-down"></i>
+                  </div>
+                </div>
+              </VideoBackground>
+            </section>
+
+            {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+
+            {/* Services Section */}
+            <section id="services" className="py-24 bg-black">
+              <div className="container mx-auto px-6">
+                <FadeInSection>
+                  <div className="text-center mb-16">
+                    <span className="inline-block text-nunes-red font-semibold mb-2">
+                      OUR EXPERTISE
+                    </span>
+                    <h2 className="font-montserrat text-4xl md:text-5xl mb-4 text-white font-bold">
+                      PREMIUM SERVICES
+                    </h2>
+                    <div className="w-24 h-1 bg-nunes-red mx-auto mb-6"></div>
+                    <p className="max-w-2xl mx-auto text-gray-300">
+                      We deliver exceptional automotive restoration services
+                      with uncompromising attention to detail.
+                    </p>
+                  </div>
+                </FadeInSection>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {/* Service 1 */}
+                  <FadeInSection direction="up" delay={0.1}>
+                    <div className="service-card glass-card rounded-xl overflow-hidden">
+                      <div className="h-48 bg-nunes-gray flex items-center justify-center relative overflow-hidden">
+                        <div className="service-icon text-nunes-red text-6xl z-10">
+                          <i className="fas fa-spray-can"></i>
+                        </div>
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover opacity-40"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        >
+                          <source
+                            src="videos/VID_20231103_160644.mp4"
+                            type="video/mp4"
+                          />
+                        </video>
+                      </div>
+                      <div className="p-8">
+                        <h3 className="font-montserrat text-2xl mb-4 text-white font-bold">
+                          Spray Painting
+                        </h3>
+                        <p className="text-gray-300 mb-6">
+                          Expert automotive spray painting with precision color
+                          matching and premium finishes for a flawless result.
+                        </p>
+                        <ul className="space-y-3 mb-8">
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Perfect color matching
+                            </span>
+                          </li>
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Premium paint materials
+                            </span>
+                          </li>
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Flawless finish guaranteed
+                            </span>
+                          </li>
+                        </ul>
+                        <a
+                          href="#quote"
+                          className="inline-flex items-center text-nunes-red font-semibold hover:text-red-400 transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("quote");
+                          }}
+                        >
+                          Request Service{" "}
+                          <i className="fas fa-arrow-right ml-2"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </FadeInSection>
+
+                  {/* Service 2 */}
+                  <FadeInSection direction="up" delay={0.3}>
+                    <div className="service-card glass-card rounded-xl overflow-hidden">
+                      <div className="h-48 bg-nunes-gray flex items-center justify-center relative overflow-hidden">
+                        <div className="service-icon text-nunes-red text-6xl z-10">
+                          <i className="fas fa-tools"></i>
+                        </div>
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover opacity-40"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        >
+                          <source
+                            src="videos/VID_20250318_113920.mp4"
+                            type="video/mp4"
+                          />
+                        </video>
+                      </div>
+                      <div className="p-8">
+                        <h3 className="font-montserrat text-2xl mb-4 text-white font-bold">
+                          Panel Beating
+                        </h3>
+                        <p className="text-gray-300 mb-6">
+                          Precision panel beating and dent removal to restore
+                          your vehicle's body to its original condition.
+                        </p>
+                        <ul className="space-y-3 mb-8">
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Expert dent removal
+                            </span>
+                          </li>
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Frame straightening
+                            </span>
+                          </li>
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Rust repair and prevention
+                            </span>
+                          </li>
+                        </ul>
+                        <a
+                          href="#quote"
+                          className="inline-flex items-center text-nunes-red font-semibold hover:text-red-400 transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("quote");
+                          }}
+                        >
+                          Request Service{" "}
+                          <i className="fas fa-arrow-right ml-2"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </FadeInSection>
+
+                  {/* Service 3 */}
+                  <FadeInSection direction="up" delay={0.5}>
+                    <div className="service-card glass-card rounded-xl overflow-hidden">
+                      <div className="h-48 bg-nunes-gray flex items-center justify-center relative overflow-hidden">
+                        <div className="service-icon text-nunes-red text-6xl z-10">
+                          <i className="fas fa-car-crash"></i>
+                        </div>
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover opacity-40"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        >
+                          <source
+                            src="videos/VID-20250505-WA0036.mp4"
+                            type="video/mp4"
+                          />
+                        </video>
+                      </div>
+                      <div className="p-8">
+                        <h3 className="font-montserrat text-2xl mb-4 text-white font-bold">
+                          Accident Repairs
+                        </h3>
+                        <p className="text-gray-300 mb-6">
+                          Complete accident damage repair services from minor
+                          bumps to major collision restoration.
+                        </p>
+                        <ul className="space-y-3 mb-8">
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Insurance claim assistance
+                            </span>
+                          </li>
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Structural repairs
+                            </span>
+                          </li>
+                          <li className="flex items-start">
+                            <i className="fas fa-check-circle text-nunes-red mt-1 mr-3"></i>
+                            <span className="text-gray-300">
+                              Complete restoration
+                            </span>
+                          </li>
+                        </ul>
+                        <a
+                          href="#quote"
+                          className="inline-flex items-center text-nunes-red font-semibold hover:text-red-400 transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("quote");
+                          }}
+                        >
+                          Request Service{" "}
+                          <i className="fas fa-arrow-right ml-2"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </FadeInSection>
+                </div>
+              </div>
+            </section>
+
+            {/* .........................................About Section................... */}
+            <section
+              id="about"
+              className="py-24 bg-nunes-dark relative overflow-hidden"
+            >
+              <video className="section-video" autoPlay loop muted playsInline>
+                <source
+                  src="videos/,/toyotaCorollaFulService.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent"></div>
+
+              <div className="container mx-auto px-6 relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                  <FadeInSection direction="left">
+                    <div>
+                      <span className="inline-block text-nunes-red font-semibold mb-2">
+                        ABOUT US
+                      </span>
+                      <h2 className="font-montserrat text-4xl md:text-5xl mb-6 text-white font-bold">
+                        15+ YEARS OF AUTOMOTIVE EXCELLENCE
+                      </h2>
+                      <div className="w-24 h-1 bg-nunes-red mb-6"></div>
+
+                      <p className="text-gray-300 mb-6">
+                        Established over three years ago, Nunes Panel Shop has
+                        built a reputation for excellence in automotive body
+                        repair and restoration. Our team of skilled technicians
+                        combines traditional craftsmanship with modern
+                        technology to deliver exceptional results.
+                      </p>
+
+                      <p className="text-gray-300 mb-8">
+                        We take pride in our attention to detail and commitment
+                        to quality. Every vehicle that comes through our doors
+                        receives the same level of care and precision, whether
+                        it's a minor dent repair or a complete restoration
+                        project.
+                      </p>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div className="glass-card p-6 rounded-lg">
+                          <div className="flex items-center mb-4">
+                            <img
+                              className="w-12 h-12 rounded-full  flex  justify-center mr-4 "
+                              src="members images/ExpertMember.jpg"
+                            />
+                            <div>
+                              <h4 className="font-bold text-lg text-white">
+                                Phakathwayo
+                              </h4>
+                              <span className="text-gray-400">
+                                061-311-9125
+                              </span>
+                            </div>
+                          </div>
+                          <p className="text-gray-300">
+                            Our expert member is a highly skilled technician
+                            with years of experience, dedicated to delivering
+                            top-quality workmanship and reliable service.
+                          </p>
+                        </div>
+
+                        <div className="glass-card p-6 rounded-lg">
+                          <div className="flex items-center mb-4">
+                            <div className="w-14 h-1 4  mr-4 flex items-center justify-center">
+                              <img
+                                className="w-12 h-12 rounded-full "
+                                src="members images/Director.png"
+                                alt=""
+                              />
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-lg text-white">
+                                Director
+                              </h4>
+                            </div>
+                          </div>
+                          <p className="text-gray-300">
+                            Our Director leads with vision, experience, and a
+                            commitment to excellence—ensuring every project
+                            meets the highest standards in quality and
+                            innovation. <br />
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center">
+                        <svg
+                          width="120"
+                          height="60"
+                          viewBox="0 0 120 60"
+                          className="mr-6"
+                        >
+                          <path
+                            fill="#e60000"
+                            d="M10 30h100M30 10c0 20 20 20 20 40M70 10c0 20 20 20 20 40"
+                            stroke="#e60000"
+                            strokeWidth="2"
+                            fill="none"
+                          />
+                          <text
+                            x="60"
+                            y="55"
+                            fontFamily="Montserrat"
+                            fontSize="12"
+                            fill="white"
+                            textAnchor="middle"
+                            fontWeight="bold"
+                          >
+                            NUNES
+                          </text>
+                        </svg>
+                        <div>
+                          <h4 className="font-bold text-lg text-white">
+                            Felix Carlos
+                          </h4>
+                          <p className="text-gray-300">
+                            Founder & Master Technician
+                          </p>
+                          <span className="text-gray-400">
+                            carlosnyozolo1@gmail.com
+                            <br />
+                            063-480-5997
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeInSection>
+
+                  <FadeInSection direction="right" delay={0.3}>
+                    <div className="relative">
+                      <div className="relative h-96 md:h-[500px] rounded-xl overflow-hidden glass-card">
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover opacity-60"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        >
+                          <source
+                            src="videos/toyotaCorollaFulService.mp4"
+                            type="video/mp4"
+                          />
+                        </video>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="glass-card p-8 rounded-lg max-w-md text-center">
+                            <h3 className="font-montserrat text-2xl mb-4 text-white font-bold">
+                              Our Mission
+                            </h3>
+                            <p className="text-gray-200">
+                              To provide the highest quality automotive body
+                              repair services with integrity, precision, and
+                              customer satisfaction as our top priorities.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="absolute -bottom-6 -right-6 bg-nunes-red p-6 rounded-lg shadow-lg">
+                        <div className="text-white text-center">
+                          <div className="text-4xl font-bold font-montserrat mb-2">
+                            15+
+                          </div>
+                          <div className="uppercase font-medium">
+                            Years Experience
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeInSection>
+                </div>
+              </div>
+            </section>
+
+            {/* Gallery Section */}
+            <section id="gallery" className="py-24 bg-black">
+              <div className="container mx-auto px-6">
+                <FadeInSection>
+                  <div className="text-center mb-16">
+                    <span className="inline-block text-nunes-red font-semibold mb-2">
+                      OUR PORTFOLIO
+                    </span>
+                    <h2 className="font-montserrat text-4xl md:text-5xl mb-4 text-white font-bold">
+                      BEFORE & AFTER
+                    </h2>
+                    <div className="w-24 h-1 bg-nunes-red mx-auto mb-6"></div>
+                    <p className="max-w-2xl mx-auto text-gray-300">
+                      See the transformation as we bring damaged vehicles back
+                      to their original glory.
+                    </p>
+                  </div>
+                </FadeInSection>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                  <FadeInSection direction="left" delay={0.2}>
+                    <div className="glass-card rounded-xl overflow-hidden">
+                      <h3 className="font-montserrat text-xl p-4 text-white font-bold">
+                        Side Panel Dent Repair
+                      </h3>
+                      <BeforeAfterSlider
+                        beforeImage="shop_image/IMG-20250714-WA0055.jpg"
+                        afterImage="shop_image/IMG-20250714-WA0030.jpg"
+                      />
+                      <div className="p-4">
+                        <p className="text-gray-300">
+                          Complete restoration after a major front-end collision
+                          with perfect color matching and structural repair.
+                        </p>
+                      </div>
+                    </div>
+                  </FadeInSection>
+
+                  <FadeInSection direction="right" delay={0.4}>
+                    <div className="glass-card rounded-xl overflow-hidden">
+                      <h3 className="font-montserrat text-xl p-4 text-white font-bold">
+                        Full body Repair
+                      </h3>
+                      <BeforeAfterSlider
+                        beforeImage="shop_image/car images/IMG-20250714-WA0043.jpg"
+                        afterImage="shop_image/car images/BV-48.jpg"
+                      />
+                      <div className="p-4">
+                        <p className="text-gray-300">
+                          Expert panel beating to remove large dent damage with
+                          seamless paint blending.
+                        </p>
+                      </div>
+                    </div>
+                  </FadeInSection>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <FadeInSection direction="up" delay={0.2}>
+                    <div className="gallery-item rounded-xl overflow-hidden glass-card">
+                      <div className="relative h-64">
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover"
+                          autoPlay
+                          loop
+                          scr="c:\Users\sbkha\Downloads\html5up-helios\assets\videos\8469673-uhd_3840_2160_25fps.mp4"
+                          muted
+                          playsInline
+                        >
+                          <source src="videos/painting.mp4" type="video/mp4" />
+                        </video>
+                        <div className="gallery-overlay absolute inset-0 flex items-end p-6">
+                          <div>
+                            <span className="inline-block bg-nunes-red text-white px-3 py-1 rounded-full text-xs mb-2">
+                              Process
+                            </span>
+                            <h3 className="text-white font-bold text-xl">
+                              Spray Painting
+                            </h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeInSection>
+
+                  <FadeInSection direction="up" delay={0.4}>
+                    <div className="gallery-item rounded-xl overflow-hidden glass-card">
+                      <div className="relative h-64">
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        >
+                          <source src="videos/welding.mp4" type="video/mp4" />
+                        </video>
+                        <div className="gallery-overlay absolute inset-0 flex items-end p-6">
+                          <div>
+                            <span className="inline-block bg-nunes-red text-white px-3 py-1 rounded-full text-xs mb-2">
+                              Process
+                            </span>
+                            <h3 className="text-white font-bold text-xl">
+                              Welding
+                            </h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeInSection>
+
+                  <FadeInSection direction="up" delay={0.6}>
+                    <div className="gallery-item rounded-xl overflow-hidden glass-card">
+                      <div className="relative h-64">
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        >
+                          <source src="videos/polishing.mp4" type="video/mp4" />
+                        </video>
+                        <div className="gallery-overlay absolute inset-0 flex items-end p-6">
+                          <div>
+                            <span className="inline-block bg-nunes-red text-white px-3 py-1 rounded-full text-xs mb-2">
+                              Process
+                            </span>
+                            <h3 className="text-white font-bold text-xl">
+                              Polishing
+                            </h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeInSection>
+                </div>
+
+                <div className="mt-12 text-center">
+                  <a
+                    href="#"
+                    className="bg-nunes-red hover:bg-red-700 text-white px-8 py-4 rounded-md font-semibold inline-block transition-all duration-300 hover:shadow-lg"
+                  >
+                    View Full Gallery
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section id="testimonials" className="py-24 bg-nunes-dark relative">
+              <video className="section-video" autoPlay loop muted playsInline>
+                <source
+                  src="https://assets.mixkit.co/videos/preview/mixkit-man-polishing-a-car-with-a-machine-15043-large.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-b from-black to-transparent"></div>
+
+              <div className="container mx-auto px-6 relative z-10">
+                <FadeInSection>
+                  <div className="text-center mb-16">
+                    <span className="inline-block text-nunes-red font-semibold mb-2">
+                      TESTIMONIALS
+                    </span>
+                    <h2 className="font-montserrat text-4xl md:text-5xl mb-4 text-white font-bold">
+                      CLIENT EXPERIENCES
+                    </h2>
+                    <div className="w-24 h-1 bg-nunes-red mx-auto mb-6"></div>
+                    <p className="max-w-2xl mx-auto text-gray-300">
+                      Hear what our satisfied customers have to say about their
+                      experience with Nunes Panel Shop.
+                    </p>
+                  </div>
+                </FadeInSection>
+
+                <div className="relative">
+                  <div className="flex overflow-x-auto pb-8 hide-scrollbar snap-x snap-mandatory">
+                    {/* Testimonial 1 */}
+                    <div className="min-w-[300px] md:min-w-[400px] p-8 mx-4 glass-card rounded-xl flex-shrink-0 snap-center">
+                      <div className="flex items-center mb-6">
+                        <div className="text-yellow-400 flex">
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                        </div>
+                        <span className="ml-2 text-gray-300">5.0</span>
+                      </div>
+                      <p className="text-gray-300 mb-8 italic">
+                        "Nunes Panel Shop did an amazing job repairing my car
+                        after a serious accident. The paint match is perfect,
+                        and you can't even tell it was damaged. Highly
+                        recommended!"
+                      </p>
+                      <div className="flex items-center">
+                        <div className="w-14 h-14 rounded-full bg-nunes-red bg-opacity-20 flex items-center justify-center mr-4">
+                          <span className="text-white font-semibold text-xl">
+                            SU
+                          </span>
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-white">Sumkeloew</h4>
+                          <p className="text-gray-400">Satisfied Customer</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Testimonial 2 */}
+                    <div className="min-w-[300px] md:min-w-[400px] p-8 mx-4 glass-card rounded-xl flex-shrink-0 snap-center">
+                      <div className="flex items-center mb-6">
+                        <div className="text-yellow-400 flex">
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                        </div>
+                        <span className="ml-2 text-gray-300">5.0</span>
+                      </div>
+                      <p className="text-gray-300 mb-8 italic">
+                        "Professional service from start to finish. They handled
+                        my insurance claim smoothly and completed the repairs
+                        ahead of schedule. My car looks better than before the
+                        accident!"
+                      </p>
+                      <div className="flex items-center">
+                        <div className=" flex items-center justify-center mr-2">
+                          <img
+                            src="shop_image/car images/BV-48.jpg"
+                            alt="Spray Gun"
+                            className="w-14 h-14 rounded-full  flex  justify-center mr-3"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-white">BV-48</h4>
+                          <p className="text-gray-400">Loyal Customer</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Testimonial 3 */}
+                    <div className="min-w-[300px] md:min-w-[400px] p-8 mx-4 glass-card rounded-xl flex-shrink-0 snap-center">
+                      <div className="flex items-center mb-6">
+                        <div className="text-yellow-400 flex">
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star"></i>
+                          <i className="fas fa-star-half-alt"></i>
+                        </div>
+                        <span className="ml-2 text-gray-300">4.5</span>
+                      </div>
+                      <p className="text-gray-300 mb-8 italic">
+                        "I've been taking my vehicles to Nunes Panel Shop for
+                        years. Their attention to detail and quality of work is
+                        consistently excellent. The team is always friendly and
+                        helpful."
+                      </p>
+                      <div className="flex items-center">
+                        <div className="w-14 h-14 rounded-full bg-nunes-red bg-opacity-20 flex items-center justify-center mr-4">
+                          <span className="text-white font-semibold text-xl">
+                            69
+                          </span>
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-white">Mdweshu69</h4>
+                          <p className="text-gray-400">Repeat Customer</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* CTA Section */}
+            <section className="py-24 bg-black relative overflow-hidden">
+              <video className="section-video" autoPlay loop muted playsInline>
+                <source
+                  src="https://assets.mixkit.co/videos/preview/mixkit-man-spray-painting-a-car-door-in-a-workshop-12791-large.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+
+              <div className="container mx-auto px-6 relative z-10">
+                <FadeInSection direction="up">
+                  <div className="max-w-4xl mx-auto text-center">
+                    <span className="inline-block text-nunes-red font-semibold mb-2">
+                      READY TO GET STARTED?
+                    </span>
+                    <h2 className="font-montserrat text-4xl md:text-5xl mb-6 text-white font-bold">
+                      BRING YOUR VEHICLE BACK TO LIFE
+                    </h2>
+                    <p className="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">
+                      Experience the difference with Nunes Panel Shop. Our
+                      expert team is ready to restore your vehicle to its former
+                      glory with precision and care.
+                    </p>
+
+                    <div className="flex flex-wrap justify-center gap-4">
+                      <a
+                        href="#quote"
+                        className="bg-nunes-red hover:bg-red-700 text-white px-8 py-4 rounded-md font-semibold text-lg transition-all duration-300 hover:shadow-lg"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection("quote");
+                        }}
+                      >
+                        Get a Free Quote
+                      </a>
+                      <a
+                        href="#contact"
+                        className="bg-transparent border-2 border-white hover:bg-white hover:text-black text-white px-8 py-4 rounded-md font-semibold text-lg transition-colors duration-300"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection("contact");
+                        }}
+                      >
+                        Contact Us
+                      </a>
+                    </div>
+                  </div>
+                </FadeInSection>
+              </div>
+            </section>
+
+            {/* Quote Form Section */}
+            <section id="quote" className="py-24 bg-nunes-dark">
+              <div className="container mx-auto px-6">
+                <div className="max-w-5xl mx-auto">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 overflow-hidden rounded-xl">
+                    <FadeInSection direction="left">
+                      <div className="bg-black p-10 md:p-12 relative overflow-hidden">
+                        <video
+                          className="absolute inset-0 w-full h-full object-cover opacity-30"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        >
+                          <source
+                            src="https://assets.mixkit.co/videos/preview/mixkit-hands-polishing-a-car-with-a-cloth-15044-large.mp4"
+                            type="video/mp4"
+                          />
+                        </video>
+                        <div className="relative z-10">
+                          <span className="inline-block text-nunes-red font-semibold mb-2">
+                            REQUEST A QUOTE
+                          </span>
+                          <h2 className="font-montserrat text-3xl md:text-4xl mb-6 text-white font-bold">
+                            GET YOUR FREE ESTIMATE
+                          </h2>
+                          <p className="text-gray-300 mb-8">
+                            Fill out the form and our team will get back to you
+                            within 24 hours with a free, no-obligation quote.
+                          </p>
+
+                          <div className="space-y-6 mb-8">
+                            <div className="flex items-start">
+                              <div className="w-10 h-10 rounded-full bg-nunes-red flex items-center justify-center mr-4 flex-shrink-0">
+                                <i className="fas fa-phone-alt text-white"></i>
+                              </div>
+                              <div>
+                                <h3 className="text-white font-semibold mb-1">
+                                  Call Us
+                                </h3>
+                                <p className="text-gray-300">+27 63 480 5997</p>
+                              </div>
+                            </div>
+
+                            <div className="flex items-start">
+                              <div className="w-10 h-10 rounded-full bg-nunes-red flex items-center justify-center mr-4 flex-shrink-0">
+                                <i className="fas fa-envelope text-white"></i>
+                              </div>
+                              <div>
+                                <h3 className="text-white font-semibold mb-1">
+                                  Email Us
+                                </h3>
+                                <p className="text-gray-300">
+                                  nunespanelshop@gmail.com
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex items-start">
+                              <div className="w-10 h-10 rounded-full bg-nunes-red flex items-center justify-center mr-4 flex-shrink-0">
+                                <i className="fas fa-clock text-white"></i>
+                              </div>
+                              <div>
+                                <h3 className="text-white font-semibold mb-1">
+                                  Business Hours
+                                </h3>
+                                <p className="text-gray-300">
+                                  Mon-Fri: 8:00 AM - 5:00 PM
+                                </p>
+                                <p className="text-gray-300">
+                                  Saturday: 9:00 AM - 1:00 PM
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="glass-card p-6 rounded-lg">
+                            <div className="flex items-center mb-4">
+                              <div className="w-10 h-10 rounded-full bg-nunes-red bg-opacity-20 flex items-center justify-center mr-4">
+                                <i className="fas fa-shield-alt text-nunes-red"></i>
+                              </div>
+                              <h4 className="text-white font-semibold">
+                                12-Month Warranty
+                              </h4>
+                            </div>
+                            <p className="text-gray-300 text-sm">
+                              All our repair work comes with a 12-month
+                              workmanship and paint warranty for your peace of
+                              mind.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </FadeInSection>
+
+                    <FadeInSection direction="right" delay={0.3}>
+                      <div className="glass-card p-10 md:p-12">
+                        <form id="quote-form" className="space-y-6">
+                          <div>
+                            <label
+                              htmlFor="name"
+                              className="block text-white font-medium mb-2"
+                            >
+                              Full Name
+                            </label>
+                            <input
+                              type="text"
+                              id="name"
+                              name="name"
+                              className="w-full px-4 py-3 bg-nunes-gray border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-nunes-red text-white"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label
+                              htmlFor="email"
+                              className="block text-white font-medium mb-2"
+                            >
+                              Email Address
+                            </label>
+                            <input
+                              type="email"
+                              id="email"
+                              name="email"
+                              className="w-full px-4 py-3 bg-nunes-gray border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-nunes-red text-white"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label
+                              htmlFor="phone"
+                              className="block text-white font-medium mb-2"
+                            >
+                              Phone Number
+                            </label>
+                            <input
+                              type="tel"
+                              id="phone"
+                              name="phone"
+                              className="w-full px-4 py-3 bg-nunes-gray border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-nunes-red text-white"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label
+                              htmlFor="vehicle"
+                              className="block text-white font-medium mb-2"
+                            >
+                              Vehicle Details
+                            </label>
+                            <input
+                              type="text"
+                              id="vehicle"
+                              name="vehicle"
+                              placeholder="Year, Make, Model"
+                              className="w-full px-4 py-3 bg-nunes-gray border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-nunes-red text-white"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label
+                              htmlFor="service"
+                              className="block text-white font-medium mb-2"
+                            >
+                              Service Required
+                            </label>
+                            <select
+                              id="service"
+                              name="service"
+                              className="w-full px-4 py-3 bg-nunes-gray border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-nunes-red text-white"
+                              required
+                            >
+                              <option value="">Select a service</option>
+                              <option value="Spray Painting">
+                                Spray Painting
+                              </option>
+                              <option value="Panel Beating">
+                                Panel Beating
+                              </option>
+                              <option value="Accident Repair">
+                                Accident Repair
+                              </option>
+                              <option value="Dent Removal">Dent Removal</option>
+                              <option value="Other">Other</option>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label
+                              htmlFor="message"
+                              className="block text-white font-medium mb-2"
+                            >
+                              Additional Details
+                            </label>
+                            <textarea
+                              id="message"
+                              name="message"
+                              rows="4"
+                              placeholder=""
+                              className="w-full px-4 py-3 bg-nunes-gray border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-nunes-red text-white"
+                            ></textarea>
+                          </div>
+
+                          <div>
+                            <button
+                              type="submit"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                alert(
+                                  "This form section is currently not working, please contact us via email or phone number: 063-480-5997 / nunespanelshop@gmail.com"
+                                );
+                              }}
+                              className="w-full bg-nunes-red hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 hover:shadow-lg"
+                            >
+                              Submit Quote Request
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </FadeInSection>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Contact & Location Section */}
+            <section id="contact" className="py-24 bg-black">
+              <div className="container mx-auto px-6">
+                <FadeInSection>
+                  <div className="text-center mb-16">
+                    <span className="inline-block text-nunes-red font-semibold mb-2">
+                      CONTACT US
+                    </span>
+                    <h2 className="font-montserrat text-4xl md:text-5xl mb-4 text-white font-bold">
+                      GET IN TOUCH
+                    </h2>
+                    <div className="w-24 h-1 bg-nunes-red mx-auto mb-6"></div>
+                    <p className="max-w-2xl mx-auto text-gray-300">
+                      Have questions or need assistance? Reach out to our
+                      friendly team.
+                    </p>
+                  </div>
+                </FadeInSection>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <FadeInSection direction="left">
+                    <div
+                      id="location"
+                      className="h-96 md:h-[500px] rounded-xl overflow-hidden glass-card"
+                    >
+                      {/* Map Placeholder */}
+                      <div className="w-full h-full bg-nunes-gray relative">
+                        <svg
+                          className="absolute inset-0 w-full h-full"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 800 600"
+                        >
+                          <rect width="800" height="600" fill="#1a1a1a" />
+                          <path
+                            d="M0 0h800v600H0z"
+                            fill="#0a0a0a"
+                            fillOpacity=".5"
+                          />
+                          <path d="M100 100h600v400H100z" fill="#2a2a2a" />
+                          <path d="M150 150h500v300H150z" fill="#1a1a1a" />
+                          <path d="M200 200h400v200H200z" fill="#0a0a0a" />
+                          <circle cx="400" cy="300" r="20" fill="#e60000" />
+                          <path
+                            d="M400 270v-30M370 300h-30M400 330v30M430 300h30"
+                            stroke="#e60000"
+                            strokeWidth="4"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="glass-card p-6 rounded-lg text-center">
+                            <h3 className="font-montserrat text-xl mb-2 text-white font-bold">
+                              Nunes Panel Shop
+                            </h3>
+                            <p className="text-gray-300 mb-4">
+                              Shop no 12, Ithala Building, Erf 455, Plessislaer,
+                              Pietermaritzburg, 3216
+                            </p>
+                            <a
+                              href="#"
+                              className="inline-flex items-center text-nunes-red font-semibold hover:text-red-400 transition"
+                            >
+                              Get Directions{" "}
+                              <i className="fas fa-arrow-right ml-2"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeInSection>
+
+                  <FadeInSection direction="right" delay={0.3}>
+                    <div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div className="glass-card p-8 rounded-xl">
+                          <div className="w-14 h-14 rounded-full bg-nunes-red bg-opacity-20 flex items-center justify-center mb-6">
+                            <i className="fas fa-phone-alt text-nunes-red text-xl"></i>
+                          </div>
+                          <h3 className="font-montserrat text-xl mb-4 text-white font-bold">
+                            Call Us
+                          </h3>
+                          <p className="text-gray-300 mb-2">+27 63 480 5997</p>
+                          <p className="text-gray-300">
+                            061 311 9125 (After Hours)
+                          </p>
+                        </div>
+
+                        <div className="glass-card p-8 rounded-xl">
+                          <div className="w-14 h-14 rounded-full bg-nunes-red bg-opacity-20 flex items-center justify-center mb-6">
+                            <i className="fas fa-envelope text-nunes-red text-xl"></i>
+                          </div>
+                          <h3 className="font-montserrat text-xl mb-4 text-white font-bold">
+                            Email Us
+                          </h3>
+                          <p className="text-gray-300 mb-2">
+                            nunespanelshop@gmail.com
+                          </p>
+                          <p className="text-gray-300">
+                            feliz4carlos@gmail.com
+                          </p>
+                        </div>
+
+                        <div className="glass-card p-8 rounded-xl">
+                          <div className="w-14 h-14 rounded-full bg-nunes-red bg-opacity-20 flex items-center justify-center mb-6">
+                            <i className="fas fa-map-marker-alt text-nunes-red text-xl"></i>
+                          </div>
+                          <h3 className="font-montserrat text-xl mb-4 text-white font-bold">
+                            Visit Us
+                          </h3>
+                          <p className="text-gray-300 mb-2">
+                            Shop no 12, Ithala Building, Erf 455,
+                          </p>
+                          <p className="text-gray-300">
+                            Erf 455, Plessislaer, Pietermaritzburg, 3216
+                          </p>
+                        </div>
+
+                        <div className="glass-card p-8 rounded-xl">
+                          <div className="w-14 h-14 rounded-full bg-nunes-red bg-opacity-20 flex items-center justify-center mb-6">
+                            <i className="fas fa-clock text-nunes-red text-xl"></i>
+                          </div>
+                          <h3 className="font-montserrat text-xl mb-4 text-white font-bold">
+                            Business Hours
+                          </h3>
+                          <p className="text-gray-300 mb-2">
+                            Mon-Fri: 8:00 AM - 5:00 PM
+                          </p>
+                          <p className="text-gray-300">
+                            Saturday: 9:00 AM - 1:00 PM
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="glass-card p-8 rounded-xl">
+                        <h3 className="font-montserrat text-2xl mb-6 text-white font-bold">
+                          Connect With Us
+                        </h3>
+                        <p className="text-gray-300 mb-6">
+                          Follow us on social media for the latest updates,
+                          promotions, and to see our recent work.
+                        </p>
+                        <div className="flex space-x-3">
+                          <a
+                            href="https://web.facebook.com/profile.php?id=61578697463415"
+                            target="_blank"
+                            className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center"
+                          >
+                            <i className="fab fa-facebook-f text-white text-xl"></i>
+                          </a>
+                          <a
+                            href="https://instagram.com/yourpage"
+                            className="w-12 h-12 rounded-full bg-pink-500 flex items-center justify-center"
+                          >
+                            <i className="fab fa-instagram text-white text-xl"></i>
+                          </a>
+                          <a
+                            href="https://www.tiktok.com/@nunescarlosdepainter"
+                            className="w-12 h-12 rounded-full bg-black flex items-center justify-center"
+                          >
+                            <i className="fab fa-tiktok text-white text-xl"></i>
+                          </a>
+                          <a
+                            href="#"
+                            className="w-12 h-12 rounded-full bg-blue-700 flex items-center justify-center"
+                          >
+                            <i className="fab fa-linkedin-in text-white text-xl"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </FadeInSection>
+                </div>
+              </div>
+            </section>
+
+            {/* Footer */}
+            <footer className="bg-black text-white border-t border-gray-800">
+              <div className="container mx-auto px-6 py-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                  <div>
+                    <div className="flex items-center mb-6">
+                      <div className="text-2xl font-bold font-montserrat tracking-tight">
+                        <span className="text-white">NUNES</span>
+                        <span className="text-nunes-red">PANEL</span>
+                        <span className="text-white">SHOP</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-400 mb-6">
+                      Professional automotive body repair and spray painting
+                      services with over 15 years of experience.
+                    </p>
+                    <div className="flex space-x-4">
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition"
+                      >
+                        <i class="fa-brands fa-facebook"></i>
+                      </a>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition"
+                      >
+                        <i className="fab fa-instagram"></i>
+                      </a>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition"
+                      >
+                        <i className="fab fa-twitter"></i>
+                      </a>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition"
+                      >
+                        <i className="fab fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="font-montserrat text-xl mb-6 font-bold">
+                      Quick Links
+                    </h3>
+                    <ul className="space-y-3">
+                      <li>
+                        <a
+                          href="#home"
+                          className="text-gray-400 hover:text-white transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("home");
+                          }}
+                        >
+                          Home
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#services"
+                          className="text-gray-400 hover:text-white transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("services");
+                          }}
+                        >
+                          Services
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#about"
+                          className="text-gray-400 hover:text-white transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("about");
+                          }}
+                        >
+                          About Us
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#gallery"
+                          className="text-gray-400 hover:text-white transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("gallery");
+                          }}
+                        >
+                          Gallery
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#testimonials"
+                          className="text-gray-400 hover:text-white transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("testimonials");
+                          }}
+                        >
+                          Testimonials
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#contact"
+                          className="text-gray-400 hover:text-white transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection("contact");
+                          }}
+                        >
+                          Contact
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-montserrat text-xl mb-6 font-bold">
+                      Our Services
+                    </h3>
+                    <ul className="space-y-3">
+                      <li>
+                        <a
+                          href="#"
+                          className="text-gray-400 hover:text-white transition"
+                        >
+                          Spray Painting
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-gray-400 hover:text-white transition"
+                        >
+                          Panel Beating
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-gray-400 hover:text-white transition"
+                        >
+                          Accident Repairs
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-gray-400 hover:text-white transition"
+                        >
+                          Dent Removal
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-gray-400 hover:text-white transition"
+                        >
+                          Custom Paint Jobs
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="text-gray-400 hover:text-white transition"
+                        >
+                          Insurance Claims
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-montserrat text-xl mb-6 font-bold">
+                      Contact Info
+                    </h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start">
+                        <i className="fas fa-map-marker-alt mt-1 mr-3 text-nunes-red"></i>
+                        <span className="text-gray-400">
+                          Shop no 12, Ithala Building, Erf 455, Plessislaer,
+                          Pietermaritzburg, 3216
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <i className="fas fa-phone-alt mt-1 mr-3 text-nunes-red"></i>
+                        <span className="text-gray-400">+27 63 480 5997</span>
+                      </li>
+                      <li className="flex items-start">
+                        <i className="fas fa-envelope mt-1 mr-3 text-nunes-red"></i>
+                        <span className="text-gray-400">
+                          nunespanelshop@gmail.com
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <i className="fas fa-clock mt-1 mr-3 text-nunes-red"></i>
+                        <span className="text-gray-400">
+                          Mon-Fri: 8:00 AM - 5:00 PM
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-800 py-8">
+                <div className="container mx-auto px-6">
+                  <div className="flex flex-col md:flex-row justify-between items-center">
+                    <p className="text-gray-400 mb-4 md:mb-0">
+                      &copy; 2023 Nunes Panel Shop (PTY) LTD. All rights
+                      reserved.
+                    </p>
+                    <div className="flex space-x-6">
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition"
+                      >
+                        Privacy Policy
+                      </a>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition"
+                      >
+                        Terms of Service
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </footer>
+
+            {/* Back to Top Button */}
+            <button
+              id="back-to-top"
+              className="fixed bottom-8 right-8 bg-nunes-red text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-50 hover:bg-red-700 transition-all duration-300"
+              onClick={() => {
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
+            >
+              <i className="fas fa-chevron-up"></i>
+            </button>
+          </>
+        );
+      };
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+
+      // Form submission handler
+      document.addEventListener("DOMContentLoaded", () => {
+        const quoteForm = document.getElementById("quote-form");
+
+        if (quoteForm) {
+          quoteForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const vehicle = document.getElementById("vehicle").value;
+            const service = document.getElementById("service").value;
+            const message = document.getElementById("message").value;
+
+            // In a real implementation, you would send this data to a server
+            // For demo purposes, we'll just show an alert
+            alert(
+              `Thank you, ${name}! Your quote request for ${service} has been submitted. We'll contact you soon about your ${vehicle}.`
+            );
+
+            // Reset form
+            quoteForm.reset();
+          });
+        }
+      });
+    </script>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'96325ce050d40e44',t:'MTc1MzE4MTI3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
